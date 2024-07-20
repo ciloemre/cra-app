@@ -11,30 +11,39 @@ import {
 function App() {
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
-  const [list, setList] = useState([
-    { id: 1, name: "Item 1" },
-    { id: 2, name: "Item 2" },
-    { id: 3, name: "Item 3" },
-    { id: 4, name: "Item 4" },
-    { id: 5, name: "Item 5" },
-    { id: 6, name: "Item 6" },
-    { id: 7, name: "Item 7" },
-  ]);
+  const [list, setList] = useState([]);
   const [editId, setEditId] = useState(null);
   const [editText, setEditText] = useState("");
 
+  const isValidDate = (dateString) => {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateString.match(regex)) return false;
+
+    const date = new Date(dateString);
+    const timestamp = date.getTime();
+
+    if (typeof timestamp !== "number" || Number.isNaN(timestamp)) return false;
+
+    return date.toISOString().startsWith(dateString);
+  };
+
   const addItem = () => {
     if (text === "" && text2 === "") {
-      alert("Lütfen bir değer giriniz!");
+      alert("Lütfen tarih ve görev bilgilerini giriniz!");
+    } else if (text === "") {
+      alert("Lütfen tarih bilgilerini giriniz!");
+    } else if (!isValidDate(text)) {
+      alert("Geçerli bir tarih giriniz!");
+    } else if (text2 === "") {
+      alert("Lütfen görev bilgisi giriniz!");
     } else {
-      const newItems = [];
-      if (text !== "") {
-        newItems.push({ id: Date.now() + 1, name: text });
-      }
-      if (text2 !== "") {
-        newItems.push({ id: Date.now() + 2, name: text2 });
-      }
-      setList([...list, ...newItems]);
+      const newItem = {
+        id: Date.now(),
+        date: text,
+        task: text2,
+        completed: false,
+      };
+      setList([...list, newItem]);
       setText("");
       setText2("");
     }
@@ -49,14 +58,14 @@ function App() {
     setList([]);
   };
 
-  const editItem = (id, name) => {
+  const editItem = (id, task) => {
     setEditId(id);
-    setEditText(name);
+    setEditText(task);
   };
 
   const saveEdit = (id) => {
     const newItems = list.map((item) =>
-      item.id === id ? { ...item, name: editText } : item
+      item.id === id ? { ...item, task: editText } : item
     );
     setList(newItems);
     setEditId(null);
@@ -75,8 +84,6 @@ function App() {
       <table
         style={{
           padding: "10px",
-          display: "inline-block",
-          position: "relative",
           top: "20px",
           right: "20px",
           backgroundColor: "lightgray",
@@ -84,25 +91,53 @@ function App() {
           color: "black",
           textAlign: "left",
           verticalAlign: "top",
-          width: "auto",
+          width: "1000px",
           height: "auto",
           margin: "10px",
           border: "2px solid black",
         }}
       >
-        <input
-          onChange={(e) => setText(e.target.value)}
-          style={{ margin: "10px", width: "200px" }}
-          type="text"
-          value={text}
-        />
-        <input
-          onChange={(e) => setText2(e.target.value)}
-          style={{ margin: "10px", width: "200px" }}
-          type="text"
-          value={text2}
-        />
-
+        <p
+          style={{
+            margin: "10px",
+            fontWeight: "bold",
+            fontSize: "20px",
+            color: "blue",
+            textDecoration: "underline",
+          }}
+        >
+          Yapılacaklar Listesi
+        </p>
+        <div
+          style={{
+            margin: "10px",
+            position: "relative",
+            fontWeight: "bold",
+            fontSize: "15px",
+            textDecoration: "underline",
+            fontStyle: "italic",
+          }}
+        >
+          <p>
+            Tarih ve Saat Bilgilerini Giriniz:
+            <input
+              onChange={(e) => setText(e.target.value)}
+              style={{ marginLeft: "10px", width: "200px" }}
+              type="date"
+              value={text}
+            />
+          </p>
+          <p>
+            Görevlerinizi Giriniz:
+            <input
+              onChange={(e) => setText2(e.target.value)}
+              style={{ marginLeft: "10px", width: "200px" }}
+              type="text"
+              maxLength={105}
+              value={text2}
+            />
+          </p>
+        </div>
         <button
           style={{ margin: "10px", color: "white", backgroundColor: "blue" }}
           onClick={addItem}
@@ -126,15 +161,20 @@ function App() {
                 textDecoration: item.completed ? "line-through" : "none",
               }}
             >
-              {editId === item.id ? (
-                <input
-                  type="text"
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                />
-              ) : (
-                item.name
-              )}
+              <div>
+                <strong>Tarih:</strong> {item.date} <br />
+                <strong>Görev:</strong>{" "}
+                {editId === item.id ? (
+                  <input
+                    type="text"
+                    maxLength={105}
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                  />
+                ) : (
+                  item.task
+                )}
+              </div>
               <div>
                 <FontAwesomeIcon
                   icon={faCheck}
@@ -159,7 +199,7 @@ function App() {
                   <>
                     <FontAwesomeIcon
                       icon={faEdit}
-                      onClick={() => editItem(item.id, item.name)}
+                      onClick={() => editItem(item.id, item.task)}
                       style={{
                         cursor: "pointer",
                         marginLeft: "10px",
