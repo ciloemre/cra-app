@@ -1,0 +1,187 @@
+/* App.css */
+
+/* Genel düzenleme */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Tablo için stil */
+.table-container {
+  background-color: lightgray;
+  font-size: 18px;
+  color: black;
+  text-align: left;
+  width: 100%;
+  max-width: 1000px;
+  margin: 10px;
+  border: 2px solid black;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.table-container h3 {
+  margin: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: underline;
+  color: blue;
+}
+
+/* Girdi ve düğme stilleri */
+.input-container {
+  margin: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  text-decoration: underline;
+  font-style: italic;
+  color: black;
+}
+
+.input-container input {
+  margin-left: 10px;
+  width: 200px;
+}
+
+.button {
+  margin: 10px;
+  color: white;
+  background-color: blue;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.button.delete-all {
+  background-color: red;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  margin: 10px 0;
+}
+/* App.css */
+
+.list-item.completed {
+  text-decoration: line-through;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actions .icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Responsive tasarım */
+@media (max-width: 768px) {
+  .input-container input {
+    width: 150px;
+  }
+
+  .table-container {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-container {
+    font-size: 14px;
+  }
+
+  .input-container input {
+    width: 100px;
+  }
+
+  .list-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions .icon {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
+
+/* Kalp animasyonları */
+.heart-animation {
+  position: absolute;
+  top: 640px;
+  left: -46px;
+  width: 150px;
+  height: 150px;
+  z-index: 10;
+}
+
+.rotating-heart {
+  position: absolute;
+  top: 490px;
+  right: 40px;
+  width: 150px;
+  height: 150px;
+  z-index: 10;
+}
+
+.moving-heart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  font-size: 40px;
+  color: red;
+}
+
+.moving-heart div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.moving-heart .icon {
+  font-size: 100px;
+  color: red;
+}
+
+.moving-heart .text {
+  position: absolute;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+}
+
+.rotating-heart .icon {
+  font-size: 220px;
+  color: red;
+}
+
+.rotating-heart .text {
+  position: absolute;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  top: 18%;
+  left: 6%;
+}

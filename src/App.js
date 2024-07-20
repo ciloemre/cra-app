@@ -82,50 +82,14 @@ function App() {
   };
 
   return (
-    <div style={{ textAlign: "center", position: "relative" }}>
-      <table
-        style={{
-          padding: "10px",
-          top: "20px",
-          right: "20px",
-          backgroundColor: "lightgray",
-          fontSize: "18px",
-          color: "black",
-          textAlign: "left",
-          verticalAlign: "top",
-          width: "1000px",
-          height: "auto",
-          margin: "10px",
-          border: "2px solid black",
-          position: "relative",
-        }}
-      >
-        <p
-          style={{
-            margin: "10px",
-            fontWeight: "bold",
-            fontSize: "20px",
-            color: "blue",
-            textDecoration: "underline",
-          }}
-        >
-          Yapılacaklar Listesi
-        </p>
-        <div
-          style={{
-            margin: "10px",
-            position: "relative",
-            fontWeight: "bold",
-            fontSize: "15px",
-            textDecoration: "underline",
-            fontStyle: "italic",
-          }}
-        >
+    <div className="container">
+      <div className="table-container">
+        <h3>Yapılacaklar Listesi</h3>
+        <div className="input-container">
           <p>
             Tarih ve Saat Bilgilerini Giriniz:
             <input
               onChange={(e) => setText(e.target.value)}
-              style={{ marginLeft: "10px", width: "200px" }}
               type="date"
               value={text}
             />
@@ -134,35 +98,23 @@ function App() {
             Görevlerinizi Giriniz:
             <input
               onChange={(e) => setText2(e.target.value)}
-              style={{ marginLeft: "10px", width: "200px" }}
               type="text"
               maxLength={105}
               value={text2}
             />
           </p>
         </div>
-        <button
-          style={{ margin: "10px", color: "white", backgroundColor: "blue" }}
-          onClick={addItem}
-        >
+        <button className="button" onClick={addItem}>
           Add
         </button>
-        <button
-          style={{ margin: "10px", color: "white", backgroundColor: "red" }}
-          onClick={deleteAll}
-        >
+        <button className="button delete-all" onClick={deleteAll}>
           Delete All
         </button>
         <ul>
           {list.map((item) => (
             <li
+              className={`list-item ${item.completed ? "completed" : ""}`}
               key={item.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                textDecoration: item.completed ? "line-through" : "none",
-              }}
             >
               <div>
                 <strong>Tarih:</strong> {item.date} <br />
@@ -178,13 +130,12 @@ function App() {
                   item.task
                 )}
               </div>
-              <div>
+              <div className="actions">
                 <FontAwesomeIcon
                   icon={faCheck}
                   onClick={() => completeItem(item.id)}
+                  className="icon"
                   style={{
-                    cursor: "pointer",
-                    marginLeft: "10px",
                     color: item.completed ? "green" : "gray",
                   }}
                 />
@@ -192,31 +143,22 @@ function App() {
                   <FontAwesomeIcon
                     icon={faSave}
                     onClick={() => saveEdit(item.id)}
-                    style={{
-                      cursor: "pointer",
-                      marginLeft: "10px",
-                      color: "green",
-                    }}
+                    className="icon"
+                    style={{ color: "green" }}
                   />
                 ) : (
                   <>
                     <FontAwesomeIcon
                       icon={faEdit}
                       onClick={() => editItem(item.id, item.task)}
-                      style={{
-                        cursor: "pointer",
-                        marginLeft: "10px",
-                        color: "blue",
-                      }}
+                      className="icon"
+                      style={{ color: "blue" }}
                     />
                     <FontAwesomeIcon
                       icon={faTrash}
                       onClick={() => deleteItemById(item.id)}
-                      style={{
-                        cursor: "pointer",
-                        marginLeft: "10px",
-                        color: "red",
-                      }}
+                      className="icon"
+                      style={{ color: "red" }}
                     />
                   </>
                 )}
@@ -224,14 +166,13 @@ function App() {
             </li>
           ))}
         </ul>
-      </table>
-
+      </div>
       {/* Heart and Arrow Animation */}
       <div
         style={{
           position: "absolute",
-          top: "640px",
-          left: "-46px",
+          top: "651px",
+          left: "-39px",
           zIndex: 10,
           width: "150px",
           height: "150px",
@@ -306,8 +247,8 @@ function App() {
       <div
         style={{
           position: "absolute",
-          top: "490px",
-          right: "40px",
+          top: "507px",
+          right: "45px",
           zIndex: 10,
           width: "150px",
           height: "150px",
@@ -357,11 +298,35 @@ function App() {
                   fontSize: "32px",
                   fontWeight: "bold",
                   color: "white",
-                  top: "18%",
-                  left: "6%",
+                  top: "19%",
+                  left: "13%",
                 }}
               >
-                Sınırsız ve Sonsuz...
+                Sınırsız
+              </span>
+              <span
+                style={{
+                  position: "absolute",
+                  fontSize: "32px",
+                  fontWeight: "bold",
+                  color: "white",
+                  top: "36%",
+                  left: "38%",
+                }}
+              >
+                ve
+              </span>
+              <span
+                style={{
+                  position: "absolute",
+                  fontSize: "32px",
+                  fontWeight: "bold",
+                  color: "white",
+                  top: "51%",
+                  left: "13%",
+                }}
+              >
+                Sonsuz...
               </span>
             </div>
           </div>
